@@ -2,17 +2,13 @@
 
 <div align="center">
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge\&logo=openjdk\&logoColor=white)
-![OOP](https://img.shields.io/badge/OOP-Concepts-blue?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
-![Version](https://img.shields.io/badge/Version-V2-orange?style=for-the-badge)
 
-## Advanced_Library_Management_System_Java
 
-A feature rich console based Library Management System built using Java and Object Oriented Programming principles.
+
+A feature rich desktop based Library Management System built using Java, Object Oriented Programming principles, persistent file storage, and Java Swing GUI architecture.
 
 This project simulates real world library workflows including:
-book issuing, return tracking, overdue detection, fine calculation, validations, filtering systems, and modular backend architecture.
+book management, member management, issue-return lifecycle, overdue tracking, fine calculation, validation systems, persistent storage, and modular GUI driven architecture.
 
 </div>
 
@@ -20,31 +16,50 @@ book issuing, return tracking, overdue detection, fine calculation, validations,
 
 # ✨ Features
 
-## 📖 Core Library Features
+## 📖 Book Management
 
 * Add Books
 * Delete Books
 * Update Book Details
 * Search Books by Title
 * Show All Books
+* Show Available Books
+* Show Issued Books
 
 ---
 
-## 🔄 Book Lifecycle Management
+## 👤 Member Management
 
-* Issue Books
+* Add Members
+* Search Members
+* Show All Members
+* Track Issued Books Per Member
+
+---
+
+## 🔄 Transaction System
+
+* Issue Books To Members
 * Return Books
 * Automatic Return Deadline
 * Duplicate Book ID Prevention
+* Duplicate Member ID Prevention
 
 ---
 
 ## 📊 Smart Tracking Features
 
-* Show Available Books
-* Show Issued Books
 * Overdue Book Detection
 * Fine Calculation System
+* Real Time Overdue Day Tracking
+* Persistent Runtime State
+
+### Example Output
+
+```text
+OVERDUE by 5 days
+FINE: 50
+```
 
 ---
 
@@ -54,10 +69,12 @@ book issuing, return tracking, overdue detection, fine calculation, validations,
 * Constructors
 * Encapsulation
 * Getters and Setters
+* Object Relationships
+* Multi Entity Coordination
 * Modular Design
 * State Management
 * Helper Methods
-* Object Lifecycle Tracking
+* Lifecycle Tracking
 
 ---
 
@@ -66,11 +83,13 @@ book issuing, return tracking, overdue detection, fine calculation, validations,
 * ArrayList
 * LocalDate
 * ChronoUnit
+* File Handling
+* BufferedWriter
 * Scanner
-* Loops
-* Conditional Logic
+* Swing GUI
+* Event Driven Design
+* Layout Managers
 * Validation Logic
-* Method Abstraction
 
 ---
 
@@ -80,62 +99,64 @@ book issuing, return tracking, overdue detection, fine calculation, validations,
 Advanced_Library_Management_System_Java
 │
 ├── Book.java
+├── Member.java
 ├── LibraryManager.java
-├── Main.java
+├── LibraryGUI.java
 ├── README.md
-└── .gitignore
+├── .gitignore
+└── books.txt
 ```
 
 ---
 
-# 📌 System Design
+# 📌 System Architecture
 
 ```text
-                +------------------+
-                |      Main        |
-                |------------------|
-                | Menu System      |
-                | Scanner Input    |
-                | User Interaction |
-                +--------+---------+
-                         |
-                         |
-                         v
-              calls manager methods
-                         |
-                         v
-              +-------------------+
-              |  LibraryManager   |
-              |-------------------|
-              | ArrayList<Book>   |
-              | addBook()         |
-              | removeBook()      |
-              | searchBook()      |
-              | issueBook()       |
-              | returnBook()      |
-              | overdueTracking() |
-              +---------+---------+
-                        |
-                        |
-                        v
-                 manages Book objects
-                        |
-                        v
-                +----------------+
-                |      Book      |
-                |----------------|
-                | title          |
-                | author         |
-                | bookId         |
-                | isIssued       |
-                | issueDate      |
-                | returnDate     |
-                +----------------+
+                     +----------------------+
+                     |      LibraryGUI      |
+                     |----------------------|
+                     | Swing Frontend       |
+                     | Panels               |
+                     | Buttons              |
+                     | Output Area          |
+                     +----------+-----------+
+                                |
+                                |
+                                v
+                    calls backend methods
+                                |
+                                v
+                    +----------------------+
+                    |    LibraryManager    |
+                    |----------------------|
+                    | ArrayList<Book>      |
+                    | ArrayList<Member>    |
+                    | addBook()            |
+                    | addMember()          |
+                    | issueBook()          |
+                    | returnBook()         |
+                    | overdueTracking()    |
+                    | filePersistence()    |
+                    +----------+-----------+
+                               |
+            +------------------+------------------+
+            |                                     |
+            v                                     v
+     +---------------+                    +---------------+
+     |     Book      |                    |    Member     |
+     |---------------|                    |---------------|
+     | title         |                    | memberId      |
+     | author        |                    | name          |
+     | bookId        |                    | issuedBooks   |
+     | isIssued      |                    +---------------+
+     | issueDate     |
+     | returnDate    |
+     +---------------+
 ```
 
 ---
 
-# 📚 Book State Flow
+# 📚 Book Lifecycle Flow
 
 ```text
 Available
@@ -151,22 +172,77 @@ Available
 
 ---
 
-# 📅 Overdue & Fine System
-
-The project uses:
-
-```java
-LocalDate
-ChronoUnit
-```
-
-for real time date tracking and overdue calculations.
-
-### Example Output
+# 🔄 Issue Workflow
 
 ```text
-OVERDUE by 5 days
-FINE: 50
+Find Book
+    ↓
+Find Member
+    ↓
+Validate Availability
+    ↓
+Update Book State
+    ↓
+Add Book To Member
+    ↓
+Save To File
+```
+
+---
+
+# 🔁 Return Workflow
+
+```text
+Find Book
+    ↓
+Find Member
+    ↓
+Validate Ownership
+    ↓
+Reset Book State
+    ↓
+Remove Book From Member
+    ↓
+Save To File
+```
+
+---
+
+# 💾 Persistence Workflow
+
+```text
+Program Starts
+      ↓
+loadBooksFromFile()
+      ↓
+Reconstruct Book Objects
+      ↓
+User Performs Operations
+      ↓
+saveBooksToFile()
+      ↓
+books.txt Updated
+```
+
+---
+
+# 🖥️ GUI Layout Design
+
+```text
+ ---------------------------------------------------------
+|            Advanced Library Management System           |
+ ---------------------------------------------------------
+
+ ---------------------------------------------------------
+|  Book Panel  |                                         |
+|  Member      |             Output Area                 |
+|  Transactions|                                         |
+|              |                                         |
+ ---------------------------------------------------------
+
+ ---------------------------------------------------------
+| Refresh | Clear Output | Exit                          |
+ ---------------------------------------------------------
 ```
 
 ---
@@ -188,8 +264,8 @@ This improves:
 
 * data safety
 * maintainability
-* controlled state updates
 * validation handling
+* controlled state updates
 
 ---
 
@@ -197,6 +273,8 @@ This improves:
 
 ```text
 Add Book
+    ↓
+Add Member
     ↓
 Issue Book
     ↓
@@ -207,48 +285,64 @@ Detect Overdue
 Calculate Fine
     ↓
 Return Book
+    ↓
+Persist Updated State
 ```
 
 ---
 
 # 🚀 Current Functionalities
 
-| Feature                 | Status |
-| ----------------------- | ------ |
-| Add Books               | ✅      |
-| Delete Books            | ✅      |
-| Update Books            | ✅      |
-| Search By Title         | ✅      |
-| Issue Books             | ✅      |
-| Return Books            | ✅      |
-| Overdue Detection       | ✅      |
-| Fine Calculation        | ✅      |
-| Encapsulation           | ✅      |
-| Duplicate ID Prevention | ✅      |
+| Feature              | Status |
+| -------------------- | ------ |
+| Book CRUD            | ✅      |
+| Member System        | ✅      |
+| Issue / Return       | ✅      |
+| Overdue Detection    | ✅      |
+| Fine Calculation     | ✅      |
+| File Persistence     | ✅      |
+| Swing GUI Layout     | ✅      |
+| Encapsulation        | ✅      |
+| Object Relationships | ✅      |
 
 ---
 
-# 📌 Current Limitations
+# 📌 Development Approach
 
-This version currently uses:
+This project was manually implemented using an architecture first workflow.
 
-* in memory storage
-* console based UI
+The codebase was not blindly generated or directly copied.
+Each subsystem was incrementally:
 
-Data resets after program termination.
+* designed
+* implemented
+* validated
+* refactored
+* integrated
+
+during development.
+
+Focus areas included:
+
+* backend architecture
+* object relationships
+* persistence systems
+* GUI structuring
+* modular design
+* scalable workflows
 
 ---
 
 # 🔮 Planned Improvements
 
-* File Handling Persistence
-* Quantity Based Inventory
-* Member Management System
-* GUI Version
+* Full GUI Event Integration
 * Database Integration
 * Authentication System
+* Quantity Based Inventory
 * Search Filters
 * Book Categories
+* Admin Dashboard
+* Statistics Panel
 
 ---
 
@@ -258,12 +352,12 @@ This project strengthened understanding of:
 
 * Object Oriented Programming
 * Backend Logic Design
-* Java Collections Framework
-* Date & Time APIs
-* State Driven Systems
-* Validation Logic
-* Real World Software Modeling
-* Modular Backend Architecture
+* Java Swing GUI
+* Persistent Storage
+* Multi Entity Architecture
+* Event Driven Programming
+* Software Layering
+* Real World Application Modeling
 
 ---
 
@@ -272,13 +366,13 @@ This project strengthened understanding of:
 ## Compile
 
 ```bash
-javac Main.java
+javac *.java
 ```
 
 ## Run
 
 ```bash
-java Main
+java LibraryGUI
 ```
 
 ---
@@ -287,4 +381,4 @@ java Main
 
 ## JatinChoudhary-07
 
-Built as part of Java backend and OOP progression journey.
+Built as part of Java backend, OOP, persistence, and GUI progression journey.
