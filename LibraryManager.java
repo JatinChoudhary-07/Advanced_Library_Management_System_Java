@@ -1,10 +1,49 @@
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Scanner;
 
 public class LibraryManager {
 
     ArrayList<Book> books = new ArrayList<>();
+    ArrayList<Member> members = new ArrayList<>();
+
+    public LibraryManager() {
+        loadBooksFromFile();
+    }
+
+    public void addMember(Member member) {
+        for (Member m : members) {
+            if (m.getMemberId() == member.getMemberId()) {
+                System.out.println("Member with same ID already exists. Allocate a new Member ID");
+                return;
+            }
+        }members.add(member);
+        System.out.println("Member" + member.getName() + "added Successfully");
+    }
+
+    public void showAllMembers() {
+        if (members.isEmpty()) {
+            System.out.println("No active members.");
+            return;
+        }
+        for (Member m : members) {
+            m.displayMember();
+        }
+    }
+
+    public void searchMember(int memberId) {
+        for (Member m : members) {
+            if (m.getMemberId() == memberId) {
+                m.displayMember();
+                return;
+            }
+        }
+        System.out.println("Member not found");
+    }
 
     public void addBook(Book book) {
 
@@ -15,6 +54,7 @@ public class LibraryManager {
             }
         }
         books.add(book);
+        saveBooksToFile();
     }
 
     public void deleteBook(int index) {
@@ -24,6 +64,7 @@ public class LibraryManager {
         } else {
             books.remove(index);
             System.out.println("Book deleted successfully");
+            saveBooksToFile();
         }
     }
 
@@ -41,38 +82,72 @@ public class LibraryManager {
         }
     }
 
-    public void issueBook(int bookId) {
+    public void issueBook(int bookId, int memberId) {
+        Book targetBook = null;
+        Member targetMember = null;
+
         for (Book b : books) {
             if (b.getBookId() == bookId) {
-                if (b.isIssued()) {
-                    System.out.println("Book already issued.\nTry Again On " + b.getExpectedReturnDate());
-                } else {
-                    b.setIssued(true);
-                    b.setIssueDate(LocalDate.now());
-                    b.setExpectedReturnDate(LocalDate.now().plusDays(14));
-                    System.out.println("Book issued successfully.\nKindly Return By: " + b.getExpectedReturnDate());
-                }
-                return;
+                targetBook = b;
+                break;
             }
         }
-        System.out.println("Invalid bookId");
+        for (Member m : members) {
+            if (m.getMemberId() == memberId) {
+                targetMember = m;
+                break;
+            }
+        }
+        if (targetBook == null) {
+            System.out.println("Invalid Book Id");
+            return;
+        }
+        if (targetMember == null) {
+            System.out.println("Invalid Member Id");
+            return;
+        }
+        
+        targetBook.setIssued(true);
+        targetBook.setIssueDate(LocalDate.now());
+        targetBook.setExpectedReturnDate(LocalDate.now().plusDays(14));
+        targetMember.issueBook(targetBook);
+        saveBooksToFile();
+        System.out.println("Book issued successfully to " + targetMember.getName());
     }
 
-    public void returnBook(int bookId) {
+    public void returnBook(int bookId, int memberId) {
+        Book targetBook = null;
+        Member targetMember = null;
+
         for (Book b : books) {
             if (b.getBookId() == bookId) {
-                if (b.isIssued()) {
-                    b.setIssued(false);
-                    b.setIssueDate(null);
-                    b.setExpectedReturnDate(null);
-                    System.out.println("Book returned successfully.\nThank You");
-                } else {
-                    System.out.println("Book already available in library.");
-                }
-                return;
+                targetBook = b;
+                break;
             }
         }
-        System.out.println("Invalid bookId");
+        for (Member m : members) {
+            if (m.getMemberId() == memberId) {
+                targetMember = m;
+                break;
+            }
+        }
+        if (targetBook == null) {
+            System.out.println("Invalid Book Id");
+            return;
+        }
+        if (targetMember == null) {
+            System.out.println("Invalid Member Id");
+            return;
+        }
+        if (!targetMember.getIssuedBooks().contains(targetBook)){
+            System.out.println("This member did no issue this book.");
+        }
+        targetBook.setIssued(false);
+        targetBook.setIssueDate(null);
+        targetBook.setExpectedReturnDate(null);
+        targetMember.returnBook(targetBook);
+        saveBooksToFile();
+        System.out.println("Book returned successfully to " + targetMember.getName());
     }
 
     public void searchByTitle(String title) {
@@ -117,6 +192,7 @@ public class LibraryManager {
                 b.setTitle(newTitle);
                 b.setAuthor(newAuthor);
                 System.out.println("Book updated successfully");
+                saveBooksToFile();
                 return;
             }
         }
@@ -163,4 +239,54 @@ public class LibraryManager {
         }
     }
 
+    public void saveBooksToFile() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("books.txt"));
+            for (Book b : books) {
+                writer.write(
+                        b.getBookId() + "," +
+                                b.getTitle() + "," +
+                                b.getAuthor() + "," +
+                                b.isIssued() + "," +
+                                b.getIssueDate() + "," +
+                                b.getExpectedReturnDate());
+                writer.newLine();
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Error saving books");
+        }
+    }
+
+    public void loadBooksFromFile() {
+        try {
+            File file = new File("books.txt");
+            if (!file.exists()) {
+                return;
+            }
+            Scanner fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                String[] data = line.split(",");
+                int bookId = Integer.parseInt(data[0]);
+                String title = data[1];
+                String author = data[2];
+                boolean isIssued = Boolean.parseBoolean(data[3]);
+                LocalDate issueDate = null;
+                LocalDate expectedReturnDate = null;
+
+                if (!data[4].equals("null")) {
+                    issueDate = LocalDate.parse(data[4]);
+                }
+                if (!data[5].equals("null")) {
+                    expectedReturnDate = LocalDate.parse(data[5]);
+                }
+                Book book = new Book(title, author, bookId, isIssued, issueDate, expectedReturnDate);
+                books.add(book);
+            }
+            fileReader.close();
+        } catch (Exception e) {
+            System.out.println("Error loading books");
+        }
+    }
 }
