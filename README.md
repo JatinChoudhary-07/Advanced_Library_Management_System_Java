@@ -93,9 +93,9 @@ The architecture focuses on:
 
 > Add your main GUI screenshot here
 
-```md
+
 ![Main GUI](screenshots/main_gui.png)
-```
+
 
 ---
 
@@ -103,9 +103,9 @@ The architecture focuses on:
 
 > Add screenshot showing Add Book / Show Books
 
-```md
+
 ![Book Management](screenshots/book_management.png)
-```
+
 
 ---
 
@@ -113,9 +113,9 @@ The architecture focuses on:
 
 > Add screenshot showing issued books or transactions
 
-```md
+
 ![Transactions](screenshots/transactions.png)
-```
+
 
 ---
 
