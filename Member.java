@@ -2,42 +2,52 @@
 import java.util.ArrayList;
 
 public class Member {
-    
+
     private int memberId;
     private String name;
-    
     private ArrayList<Book> issuedBooks;
 
-    public Member(String name, int memberId){
+    // Constructor
+    public Member(String name, int memberId) {
         this.name = name;
         this.memberId = memberId;
-
         issuedBooks = new ArrayList<>();
     }
 
-    public String getName(){
+    // Getter for name
+    public String getName() {
         return name;
     }
-    public int getMemberId(){
+
+    // Getter for member ID
+    public int getMemberId() {
         return memberId;
     }
-    public ArrayList<Book> getIssuedBooks(){
+
+    // Getter for issued books
+    public ArrayList<Book> getIssuedBooks() {
         return issuedBooks;
     }
-    public void issueBook(Book book){
+
+    // Issue a book
+    public void issueBook(Book book) {
         issuedBooks.add(book);
     }
-    public void returnBook(Book book){
+
+    // Return a book
+    public void returnBook(Book book) {
         issuedBooks.remove(book);
     }
 
-    public void displayMember(){
+    // Display member details
+    public void displayMember() {
         System.out.println(memberId + " | " + name);
-        if (issuedBooks.isEmpty()){
+        if (issuedBooks.isEmpty()) {
             System.out.println(name + " has no issued books.");
             return;
-        }System.out.println("Issued Books: ");
-        for (Book b : issuedBooks){
+        }
+        System.out.println("Issued Books: ");
+        for (Book b : issuedBooks) {
             System.out.println("- " + b.getTitle());
         }
     }

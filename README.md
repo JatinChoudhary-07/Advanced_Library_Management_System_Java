@@ -1,34 +1,54 @@
-# 📚 Advanced Library Management System (Java)
+# Advanced Library Management System (Java)
 
 <div align="center">
 
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge\&logo=openjdk\&logoColor=white)
+![Swing](https://img.shields.io/badge/GUI-Java%20Swing-success?style=for-the-badge)
+![OOP](https://img.shields.io/badge/OOP-Architecture-blue?style=for-the-badge)
+![Persistence](https://img.shields.io/badge/File%20Handling-Enabled-orange?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
 
+## Advanced_Library_Management_System_Java
 
+A desktop based Library Management System built using Java, Object Oriented Programming, persistent file handling, and Java Swing.
 
-A feature rich desktop based Library Management System built using Java, Object Oriented Programming principles, persistent file storage, and Java Swing GUI architecture.
-
-This project simulates real world library workflows including:
-book management, member management, issue-return lifecycle, overdue tracking, fine calculation, validation systems, persistent storage, and modular GUI driven architecture.
+The project models real world library workflows including:
+book management, member management, issue-return lifecycle, overdue tracking, fine calculation, persistent storage, and event driven GUI interactions.
 
 </div>
 
 ---
 
-# ✨ Features
+# Project Overview
 
-## 📖 Book Management
+This project started as a console based backend system and gradually evolved into a fully interactive desktop application.
+
+The architecture focuses on:
+
+* modular design
+* entity relationships
+* persistent state management
+* reusable GUI components
+* event driven programming
+* scalable backend logic
+
+---
+
+# Current Features
+
+## Book Management
 
 * Add Books
-* Delete Books
 * Update Book Details
-* Search Books by Title
+* Delete Books
+* Search Books
 * Show All Books
 * Show Available Books
 * Show Issued Books
 
 ---
 
-## 👤 Member Management
+## Member Management
 
 * Add Members
 * Search Members
@@ -37,63 +57,69 @@ book management, member management, issue-return lifecycle, overdue tracking, fi
 
 ---
 
-## 🔄 Transaction System
+## Transaction System
 
-* Issue Books To Members
+* Issue Books
 * Return Books
-* Automatic Return Deadline
-* Duplicate Book ID Prevention
-* Duplicate Member ID Prevention
+* Automatic Return Deadlines
+* Book Availability Validation
+* Member Validation
 
 ---
 
-## 📊 Smart Tracking Features
+## Tracking & Analytics
 
 * Overdue Book Detection
-* Fine Calculation System
-* Real Time Overdue Day Tracking
-* Persistent Runtime State
+* Fine Calculation
+* Real Time Overdue Tracking
+* Issued Book Monitoring
 
-### Example Output
+---
 
-```text
-OVERDUE by 5 days
-FINE: 50
+## GUI Features
+
+* Sidebar Navigation
+* Scrollable Layout
+* Event Driven Button Actions
+* Dynamic Output Rendering
+* Popup Input Dialogs
+* Toolbar Utilities
+
+---
+
+# GUI Preview
+
+## Main Interface
+
+> Add your main GUI screenshot here
+
+```md
+![Main GUI](screenshots/main_gui.png)
 ```
 
 ---
 
-# 🧠 OOP Concepts Used
+## Book Management Workflow
 
-* Classes and Objects
-* Constructors
-* Encapsulation
-* Getters and Setters
-* Object Relationships
-* Multi Entity Coordination
-* Modular Design
-* State Management
-* Helper Methods
-* Lifecycle Tracking
+> Add screenshot showing Add Book / Show Books
+
+```md
+![Book Management](screenshots/book_management.png)
+```
 
 ---
 
-# ⚙️ Java Concepts Used
+## Issue / Return Workflow
 
-* ArrayList
-* LocalDate
-* ChronoUnit
-* File Handling
-* BufferedWriter
-* Scanner
-* Swing GUI
-* Event Driven Design
-* Layout Managers
-* Validation Logic
+> Add screenshot showing issued books or transactions
+
+```md
+![Transactions](screenshots/transactions.png)
+```
 
 ---
 
-# 🏗️ Project Structure
+# Project Structure
 
 ```text
 Advanced_Library_Management_System_Java
@@ -102,77 +128,78 @@ Advanced_Library_Management_System_Java
 ├── Member.java
 ├── LibraryManager.java
 ├── LibraryGUI.java
+├── books.txt
 ├── README.md
-├── .gitignore
-└── books.txt
+└── screenshots/
 ```
 
 ---
 
-# 📌 System Architecture
+# System Architecture
 
 ```text
-                     +----------------------+
-                     |      LibraryGUI      |
-                     |----------------------|
-                     | Swing Frontend       |
-                     | Panels               |
-                     | Buttons              |
-                     | Output Area          |
-                     +----------+-----------+
-                                |
-                                |
-                                v
-                    calls backend methods
-                                |
-                                v
-                    +----------------------+
-                    |    LibraryManager    |
-                    |----------------------|
-                    | ArrayList<Book>      |
-                    | ArrayList<Member>    |
-                    | addBook()            |
-                    | addMember()          |
-                    | issueBook()          |
-                    | returnBook()         |
-                    | overdueTracking()    |
-                    | filePersistence()    |
-                    +----------+-----------+
-                               |
-            +------------------+------------------+
-            |                                     |
-            v                                     v
-     +---------------+                    +---------------+
-     |     Book      |                    |    Member     |
-     |---------------|                    |---------------|
-     | title         |                    | memberId      |
-     | author        |                    | name          |
-     | bookId        |                    | issuedBooks   |
-     | isIssued      |                    +---------------+
-     | issueDate     |
-     | returnDate    |
-     +---------------+
+                   +----------------------+
+                   |      LibraryGUI      |
+                   |----------------------|
+                   | Swing Frontend       |
+                   | Buttons              |
+                   | Panels               |
+                   | Output Area          |
+                   +----------+-----------+
+                              |
+                              |
+                              v
+                  Event Driven Interactions
+                              |
+                              v
+                   +----------------------+
+                   |    LibraryManager    |
+                   |----------------------|
+                   | Book Operations      |
+                   | Member Operations    |
+                   | Issue / Return       |
+                   | Overdue Tracking     |
+                   | File Persistence     |
+                   +----------+-----------+
+                              |
+              +---------------+---------------+
+              |                               |
+              v                               v
+      +---------------+               +---------------+
+      |     Book      |               |    Member     |
+      |---------------|               |---------------|
+      | title         |               | memberId      |
+      | author        |               | name          |
+      | bookId        |               | issuedBooks   |
+      | isIssued      |               +---------------+
+      | issueDate     |
+      | returnDate    |
+      +---------------+
 ```
 
 ---
 
-# 📚 Book Lifecycle Flow
+# Event Driven GUI Flow
 
 ```text
-Available
-   |
-   | issueBook()
-   v
-Issued
-   |
-   | returnBook()
-   v
-Available
+User Clicks Button
+        ↓
+ActionListener Triggered
+        ↓
+LibraryGUI Handles Event
+        ↓
+LibraryManager Executes Logic
+        ↓
+Book / Member State Updated
+        ↓
+books.txt Updated
+        ↓
+Output Rendered In GUI
 ```
 
 ---
 
-# 🔄 Issue Workflow
+# Issue Book Workflow
 
 ```text
 Find Book
@@ -183,6 +210,8 @@ Validate Availability
     ↓
 Update Book State
     ↓
+Assign Return Deadline
+    ↓
 Add Book To Member
     ↓
 Save To File
@@ -190,7 +219,7 @@ Save To File
 
 ---
 
-# 🔁 Return Workflow
+# Return Book Workflow
 
 ```text
 Find Book
@@ -203,30 +232,30 @@ Reset Book State
     ↓
 Remove Book From Member
     ↓
-Save To File
+Persist Updated State
 ```
 
 ---
 
-# 💾 Persistence Workflow
+# Persistence Workflow
 
 ```text
-Program Starts
-      ↓
+Application Starts
+        ↓
 loadBooksFromFile()
-      ↓
-Reconstruct Book Objects
-      ↓
-User Performs Operations
-      ↓
+        ↓
+Book Objects Reconstructed
+        ↓
+User Interacts With GUI
+        ↓
 saveBooksToFile()
-      ↓
+        ↓
 books.txt Updated
 ```
 
 ---
 
-# 🖥️ GUI Layout Design
+# GUI Layout Structure
 
 ```text
  ---------------------------------------------------------
@@ -247,7 +276,35 @@ books.txt Updated
 
 ---
 
-# 🔒 Encapsulation
+# OOP Concepts Used
+
+* Classes and Objects
+* Constructors
+* Encapsulation
+* Getters and Setters
+* Object Relationships
+* State Management
+* Modular Architecture
+* Helper Methods
+
+---
+
+# Java Concepts Used
+
+* ArrayList
+* LocalDate
+* ChronoUnit
+* Swing GUI
+* File Handling
+* BufferedWriter
+* Scanner
+* Event Driven Programming
+* Layout Managers
+* Exception Handling
+
+---
+
+# Encapsulation Example
 
 Critical fields are protected using:
 
@@ -255,113 +312,61 @@ Critical fields are protected using:
 private
 ```
 
-and accessed through:
-
-* getters
-* setters
+and accessed using getters/setters.
 
 This improves:
 
-* data safety
 * maintainability
 * validation handling
 * controlled state updates
+* data safety
 
 ---
 
-# 🧪 Sample Workflow
+# Current Functionalities
 
-```text
-Add Book
-    ↓
-Add Member
-    ↓
-Issue Book
-    ↓
-Assign Return Deadline
-    ↓
-Detect Overdue
-    ↓
-Calculate Fine
-    ↓
-Return Book
-    ↓
-Persist Updated State
-```
+| Feature               | Status   |
+| --------------------- | -------- |
+| Book CRUD             | Complete |
+| Member Management     | Complete |
+| Issue / Return System | Complete |
+| Overdue Tracking      | Complete |
+| Fine Calculation      | Complete |
+| Persistent Storage    | Complete |
+| Swing GUI Integration | Complete |
+| Event Driven Actions  | Complete |
+| Object Relationships  | Complete |
 
 ---
 
-# 🚀 Current Functionalities
+# Development Notes
 
-| Feature              | Status |
-| -------------------- | ------ |
-| Book CRUD            | ✅      |
-| Member System        | ✅      |
-| Issue / Return       | ✅      |
-| Overdue Detection    | ✅      |
-| Fine Calculation     | ✅      |
-| File Persistence     | ✅      |
-| Swing GUI Layout     | ✅      |
-| Encapsulation        | ✅      |
-| Object Relationships | ✅      |
+This project was implemented incrementally with focus on:
+
+* backend architecture first
+* GUI integration after backend stabilization
+* reusable methods
+* layered separation of concerns
+* gradual feature scaling
+
+The application logic was manually structured and integrated step by step instead of blindly generating full code in one pass.
 
 ---
 
-# 📌 Development Approach
+# Planned Improvements
 
-This project was manually implemented using an architecture first workflow.
-
-The codebase was not blindly generated or directly copied.
-Each subsystem was incrementally:
-
-* designed
-* implemented
-* validated
-* refactored
-* integrated
-
-during development.
-
-Focus areas included:
-
-* backend architecture
-* object relationships
-* persistence systems
-* GUI structuring
-* modular design
-* scalable workflows
-
----
-
-# 🔮 Planned Improvements
-
-* Full GUI Event Integration
 * Database Integration
 * Authentication System
-* Quantity Based Inventory
-* Search Filters
-* Book Categories
 * Admin Dashboard
+* Book Categories
+* Search Filters
 * Statistics Panel
+* Dark Mode GUI
+* Better UI Styling
 
 ---
 
-# 📈 Learning Outcomes
-
-This project strengthened understanding of:
-
-* Object Oriented Programming
-* Backend Logic Design
-* Java Swing GUI
-* Persistent Storage
-* Multi Entity Architecture
-* Event Driven Programming
-* Software Layering
-* Real World Application Modeling
-
----
-
-# ▶️ How To Run
+# How To Run
 
 ## Compile
 
@@ -377,8 +382,8 @@ java LibraryGUI
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 ## JatinChoudhary-07
 
-Built as part of Java backend, OOP, persistence, and GUI progression journey.
+Built as part of Java OOP, backend architecture, persistence systems, and desktop GUI learning progression.

@@ -1,0 +1,5 @@
+101,Harry Potter,J.K.Rowling,false,null,null
+1,b1,a1,false,null,null
+2,b2,a2,true,2026-05-06,2026-05-20
+102,book2,author2,false,null,null
+103,a3,author3,false,null,null
